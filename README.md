@@ -41,8 +41,8 @@ OFFLINE (Transfer all from internet)
   2. sudo cp docker/\* /usr/bin/
   3. Copy docker.service /etc/systemd/system/
   4. sudo chmod 644 /etc/systemd/system/docker.service
-  5. Mkdir /etc/docker
-  6. Copy daemon.json to /etc/docker/
+  5. ~~Mkdir /etc/docker
+  6. ~~Copy daemon.json to /etc/docker/
   7. Sudo systemctl enable docker
   8. Sudo systemctl restart docker
   9. sudo groupadd docker
@@ -55,12 +55,12 @@ OFFLINE (Transfer all from internet)
 4. Install docker images
   1. docker load -i dockerimages.tar
 5. Install kube
-  1. Sudo cp etc.default.kubelet /etc/default/kublet
+  ~~1. Sudo cp etc.default.kubelet /etc/default/kublet
   2. Sudo systemctl daemon-reload
-  3. Sudo systemctl restart kubelet
+  ~~3. Sudo systemctl restart kubelet
   4.
   5. Sudo cp etc\_sysctl.d\_kubernetes.conf /etc/sysctl.d
-  6. modprobe br\_netfilter
+  ~~6. modprobe br\_netfilter
   7. Sudo sysctl --system
   8. Sudo swapoff -a
   9. Sudo sed -e &#39;/swap/s/^/#/g&#39; -i /etc/fstab
