@@ -41,8 +41,8 @@ OFFLINE (Transfer all from internet)
   2. sudo cp docker/\* /usr/bin/
   3. Copy docker.service /etc/systemd/system/
   4. sudo chmod 644 /etc/systemd/system/docker.service
-  5. ~~Mkdir /etc/docker
-  6. ~~Copy daemon.json to /etc/docker/
+  5. ~~Mkdir /etc/docker~~
+  6. ~~Copy daemon.json to /etc/docker/~~
   7. Sudo systemctl enable docker
   8. Sudo systemctl restart docker
   9. sudo groupadd docker
