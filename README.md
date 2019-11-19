@@ -55,12 +55,11 @@ OFFLINE (Transfer all from internet)
 4. Install docker images
   1. docker load -i dockerimages.tar
 5. Install kube
-  ~~1. Sudo cp etc.default.kubelet /etc/default/kublet
-  2. Sudo systemctl daemon-reload
-  ~~3. Sudo systemctl restart kubelet
-  4.
-  5. Sudo cp etc\_sysctl.d\_kubernetes.conf /etc/sysctl.d
-  ~~6. modprobe br\_netfilter
+  ~~1. Sudo cp etc.default.kubelet /etc/default/kublet~~
+  2. Sudo systemctl daemon-reload~~
+  ~~3. Sudo systemctl restart kubelet~~
+ ~~5. Sudo cp etc\_sysctl.d\_kubernetes.conf /etc/sysctl.d~~
+  ~~6. modprobe br\_netfilter~~
   7. Sudo sysctl --system
   8. Sudo swapoff -a
   9. Sudo sed -e &#39;/swap/s/^/#/g&#39; -i /etc/fstab
