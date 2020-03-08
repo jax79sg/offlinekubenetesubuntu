@@ -37,7 +37,7 @@ Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
    ```deb https://apt.kubernetes.io/ kubernetes-xenial main```<br>
    ```EOF```<br>
    ```sudo apt-get update```<br>
-   ```sudo apt-get install -y kubelet kubeadm kubectl --download-only```<br>
+   ```sudo apt-get install -y kubelet=1.16.3-00 kubeadm=1.16.3-00 kubectl=1.16.3-00 --download-only```<br>
    ```sudo cp /var/cache/apt/archives/*.deb /mnt/usbdrive```<br>
    ```sudo rm /var/cache/apt/archives/*.deb```<br>
 * Get deb files for nvidia-docker-2<br>
@@ -64,15 +64,15 @@ Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
    ```wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml```<br>
    ```kubeadm config images pull```<br>
       * Make sure all following is pulled by running ```docker images```, if its not, maually do it by running ```docker pull image```<br>
-      ```k8s.gcr.io/kube-apiserver``` v1.16.3 <br>
-      ```k8s.gcr.io/kube-proxy``` v1.16.3<br>
-      ```k8s.gcr.io/kube-controller-manager``` v1.16.3<br>
-      ```k8s.gcr.io/kube-scheduler``` v1.16.3<br>
-      ```k8s.gcr.io/etcd``` 3.3.15-0<br>
-      ```k8s.gcr.io/coredns``` 1.6.2<br>
-      ```k8s.gcr.io/pause``` 3.1<br>
-      ```quay.io/coreos/flannel``` v0.11.0-amd64<br>
-      ```nvidia/k8s-device-plugin:1.0.0-beta4<br>
+      ```k8s.gcr.io/kube-apiserver:v1.16.3```  <br>
+      ```k8s.gcr.io/kube-proxy:v1.16.3```<br>
+      ```k8s.gcr.io/kube-controller-manager:v1.16.3```<br>
+      ```k8s.gcr.io/kube-scheduler:v1.16.3```<br>
+      ```k8s.gcr.io/etcd:3.3.15-0```<br>
+      ```k8s.gcr.io/coredns:1.6.2``` <br>
+      ```k8s.gcr.io/pause:3.1``` <br>
+      ```quay.io/coreos/flannel:v0.11.0-amd64``` <br>
+      ```nvidia/k8s-device-plugin:1.0.0-beta4```<br>
 * Save all pulled images<br>
    ```docker save $(docker images | sed '1d' | awk '{print $1 ":" $2 }') -o dockerimages.tar```<br>
    ```cp dockerimages.tar /mnt/usbdrive```<br>
