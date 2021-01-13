@@ -63,12 +63,11 @@ Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
     version: 2
     renderer: networkd
     ethernets:
-        enp3s0:
-            addresses:
-                - 192.168.56.109/24
+        enp0s3:
+            dhcp4: no
+            dhcp6: no
+            addresses: [192.168.56.109/24]
             gateway4: 192.168.56.102
-            nameservers:
-                addresses: [192.168.56.102]
     ```
 * Copy all on usb drive to current working directory
    `cp -r /mnt/usbdrive/* .`<br>
