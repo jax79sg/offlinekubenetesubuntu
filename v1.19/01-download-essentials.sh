@@ -72,6 +72,7 @@ sudo rm /var/cache/apt/archives/*.deb
 ## Download docker images
 mkdir -p 05_dockerimages
 kubeadm config images pull
+docker pull k8s.gcr.io/kube-proxy:v1.19.6
 docker pull quay.io/coreos/flannel:v0.13.1-rc1
 docker pull nvidia/k8s-device-plugin:v0.7.3
 echo Saving images to file
