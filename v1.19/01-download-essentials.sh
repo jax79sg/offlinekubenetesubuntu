@@ -76,7 +76,7 @@ docker pull k8s.gcr.io/kube-proxy:v1.19.6
 docker pull quay.io/coreos/flannel:v0.13.1-rc1
 docker pull nvidia/k8s-device-plugin:v0.7.3
 echo Saving images to file
-docker save $(docker images | sed '1d' | awk '{print $1 ":" $2 }') -o 05_dockerimages/dockerimages.tar
+sudo docker save $(sudo docker images | sed '1d' | awk '{print $1 ":" $2 }') -o 05_dockerimages/dockerimages.tar
 
 ## Download/Create config files
 mkdir -p 06_config
