@@ -105,8 +105,8 @@ Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
    `sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=192.168.56.109` <br>
    After some time you should receive a message saying master node successfully installed. Do copy down the instructions to add worker nodes.It looks something like below<br>
    ```
-   kubeadm join 192.168.56.109:6443 --token 6ld0m1.y3abcy4ypbhgr2ep \
-    --discovery-token-ca-cert-hash sha256:e01dba33f3808f5a847665e7e60b845fbe9940abb15b1692a8c9361137872d98
+   kubeadm join 192.168.56.109:6443 --token pju168.rh6ww8rovsopr5dr \
+    --discovery-token-ca-cert-hash sha256:ab423d13e9e6c0dcb1850b1cdd0e106376b6f9df85d5de39f4016c66f8fa1b42
    ```
    NOTE: If you don't have above info, simply run `kubeadm token create --print-join-command` on the master node.<br>
    Perform after actions<br>
