@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 ## Download essentials
 mkdir -p 01_essentials
@@ -40,7 +41,7 @@ sudo systemctl restart docker
 sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker
-
+cd ..
 
 
 ## Download Kubernetes 1.19
