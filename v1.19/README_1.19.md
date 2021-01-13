@@ -117,12 +117,12 @@ Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
    ```
    <br>
    
+   Remove master taint <br>
+   `kubectl taint nodes --all node-role.kubernetes.io/master-`
+
    Install flannel network<br>
-   
    `kubectl apply -f kube-flannel.yml`<br>
    
-   Remove master taint (br>
-   `kubectl taint nodes --all node-role.kubernetes.io/master-`
    
 * Check installation<br>
    `kubectl get nodes`<br>
