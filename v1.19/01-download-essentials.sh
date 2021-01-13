@@ -11,8 +11,34 @@ sudo rm /var/cache/apt/archives/*.deb
 
 ## Download docker 19.03
 mkdir -p 02_docker
+cat > 02_docker/docker.service << EOF
+[Unit]
+Description=Docker service
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/usr/bin/dockerd
+
 wget https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz
 mv docker-19.03.9.tgz 02_docker/
+cd 02_docker/
+tar -xvf docker-19.03.9.tgz 
+sudo cp docker/* /usr/bin/
+sudo cp docker.service /etc/systemd/system/
+sudo chmod 644 /etc/systemd/system/docker.service
+sudo systemctl enable docker
+sudo systemctl restart docker
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+
+[Install]
+WantedBy=multi-user.target
+EOF
 
 
 ## Download Kubernetes 1.19
@@ -52,20 +78,6 @@ wget https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.7.3/nvidia-de
 wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 mv nvidia-device-plugin.yml 06_config
 mv kube-flannel.yml 06_config
-cat > 06_config/docker.service << EOF
-[Unit]
-Description=Docker service
-After=network.target
-StartLimitIntervalSec=0
-[Service]
-Type=simple
-Restart=always
-RestartSec=1
-User=root
-ExecStart=/usr/bin/dockerd
 
-[Install]
-WantedBy=multi-user.target
-EOF
 
 
