@@ -23,6 +23,11 @@ RestartSec=1
 User=root
 ExecStart=/usr/bin/dockerd
 
+[Install]
+WantedBy=multi-user.target
+EOF
+
+
 wget https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz
 mv docker-19.03.9.tgz 02_docker/
 cd 02_docker/
@@ -36,9 +41,6 @@ sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker
 
-[Install]
-WantedBy=multi-user.target
-EOF
 
 
 ## Download Kubernetes 1.19
