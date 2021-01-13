@@ -29,6 +29,7 @@ git clone https://github.com/jax79sg/offlinekubenetesubuntu
 cd offlinekubenetesubuntu/v1.19
 chmod +x 01-download-essentials.sh
 sudo ./01-download-essentials.sh
+sudo ./01-download-essentials.sh #Yes, need to run twice to completion
 ```
 
 Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
