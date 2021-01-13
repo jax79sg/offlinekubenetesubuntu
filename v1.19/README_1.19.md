@@ -88,17 +88,19 @@ Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
    sudo groupadd docker
    sudo usermod -aG docker $USER
    newgrp docker
-   ```<br>
+   ```
 
 * Install docker images<br>
    ```
-   docker load -i 05_dockerimages/dockerimages.tar
-   ```<br>
+   sudo docker load -i 05_dockerimages/dockerimages.tar
+   ```
+   
 * Disable swap<br>
    ```
    sudo swapoff -a
    sudo sed -e '/swap/s/^/#/g' -i /etc/fstab
-   ```<br>
+   ```
+   
 * Install Kubernetes master<br>
    `sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=192.168.56.109` <br>
    After some time you should receive a message saying master node successfully installed. Do copy down the instructions to add worker nodes.It looks something like below<br>
