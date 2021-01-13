@@ -303,7 +303,9 @@ Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
        }
          
    ```
-
+* Install the nvidia daemonset
+  `kubectl apply -f 06_config/nvidia-device-plugin.yml`
+ 
    Reboot the GPU computer
  * Go back to Master node and run the follwing command <br>
     `kubectl describe nodes | grep -i nvidia.com` <br>
