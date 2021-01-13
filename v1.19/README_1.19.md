@@ -292,15 +292,29 @@ Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
    You will need to enable the nvidia runtime as your default runtime on your GPU node. Editing the docker daemon config file which is usually present at 
    ```
    /etc/docker/daemon.json:
-   {   
-   "default-runtime": "nvidia",
-     "runtimes": {
-       "nvidia": {
-         "path": "/usr/bin/nvidia-container-runtime",
-         "runtimeArgs": []
-         }
+   {
+    "runtimes": {
+        "nvidia": {
+            "path": "nvidia-container-runtime",
+            "runtimeArgs": []
         }
-       }
+    },
+    "default-runtime": "nvidia",
+    "default-ulimits": {
+        "nofile": {
+            "name": "nofile",
+            "hard": 65536,
+            "soft": 1024
+        },
+        "memlock":
+        {
+            "name": "memlock",
+            "soft": -1,
+            "hard": -1
+        }
+    }
+}
+
          
    ```
 * Install the nvidia daemonset
