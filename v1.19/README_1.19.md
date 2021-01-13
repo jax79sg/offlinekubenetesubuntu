@@ -208,60 +208,102 @@ Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
 Assuming that the nvidia-driver is installed and `nvidia-smi` is functional. (See https://www.nvidia.com/Download/index.aspx?lang=en-us)
 Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
 * Setting up the network<br>
-    * Assuming that only one network adaptor is active, its subnet is ```192.168.50.*``` and its interface name is `eth0`<br>
+    * Make sure that only one network adaptor is active<br>
+    * You can find out your IP and Interface by running `ip addr`<br>
+    ```
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+    2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:ed:d1:69 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.56.109/24 brd 192.168.56.255 scope global dynamic noprefixroute enp0s3
+       valid_lft 567sec preferred_lft 567sec
+    inet6 fe80::7585:cba2:21f7:4f1c/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+    ```
+    * Assuming the IP is ```192.168.56.109/24``` and its interface name is `enp0s3`<br><br>
     * Note: IP address should be static<br>
-    * Setup the `/etc/network/interfaces` file as follows<br>
-    `# The loopback network interface`<br>
-    `auto lo`<br>
-    `iface lo inet loopback`<br>
-    <br>`# The primary network interface`<br>
-    `auto eth0`<br>
-    `iface eth0 inet static`<br>
-    `address 192.168.50.3`<br>
-    `netmask 255.255.255.0`<br>
-    `gateway 192.168.50.254`<br>
+    * Setup the `/etc/netplan/01-network-manager-all.yaml` file as follows<br>
+    ```
+    network:
+    version: 2
+    renderer: networkd
+    ethernets:
+        enp0s3:
+            dhcp4: no
+            dhcp6: no
+            addresses: [192.168.56.109/24]
+            gateway4: 192.168.56.102
+    ```
+    
 * Copy all on usb drive to current working directory
-   ```cp -r /mnt/usbdrive/* .```<br>
-* Install deb files for Kubenetes<br>
-   ```sudo dpkg -i *.deb```<br>
+   `cp -r /mnt/usbdrive/* .`<br>
+* Install deb files<br>
+   ```
+   sudo dpkg -i 01_essentials/*.deb. #Do this multiple times till no errors
+   sudo dpkg -i 03_kubernetes/*.deb. #Do this multiple times till no errors
+   sudo dpkg -i 04_nvidiadocker/*.deb. #Do this multiple times till no errors   
+   ```
 * Install docker<br>
-   ```tar -xvf docker-18.09.9.tgz```<br>
-   ```sudo cp docker/* /usr/bin/```<br>
-   ```copy 02_docker/docker.service /etc/systemd/system/```<br>
-   ```sudo chmod 644 /etc/systemd/system/docker.service```<br>
-   ```sudo systemctl enable docker```<br>
-   ```sudo systemctl restart docker```<br>
-   ```sudo groupadd docker```<br>
-   ```sudo usermod -aG docker $USER```<br>
-   ```newgrp docker```<br>
+   ```
+   tar -xvf 02_docker/docker-18.03.9.tgz
+   sudo cp docker/* /usr/bin/
+   sudo cp 02_docker/docker.service /etc/systemd/system/
+   sudo chmod 644 /etc/systemd/system/docker.service
+   sudo systemctl enable docker
+   sudo systemctl restart docker
+   sudo groupadd docker
+   sudo usermod -aG docker $USER
+   newgrp docker
+   ```
 
 * Install docker images<br>
-   ```docker load -i dockerimages.tar```<br>
+   ```
+   sudo docker load -i 05_dockerimages/dockerimages.tar
+   ```
+   
 * Disable swap<br>
-   ```sudo swapoff -a```<br>
-    ``sudo sed -e '/swap/s/^/#/g' -i /etc/fstab```<br>
-~~* Add default route<br>~~
-   ~~```sudo route add default gw 192.168.50.254```<br>~~
+   ```
+   sudo swapoff -a
+   sudo sed -e '/swap/s/^/#/g' -i /etc/fstab
+   ```
+   
 * Join Kubenetes cluster by pasting the instructions from the master of joining the node. It looks something like below.<br>
-   ```kubeadm join 192.168.50.2:6443 --token 6e4ntu.a5r1md9vuqex4pe8 --discovery-token-ca-cert-hash sha256:19f4d9f6d433cc12addb70e2737c629213777deed28fa5dcc33f9d05d2382d5b```
+   ```
+    kubeadm join 192.168.56.109:6443 --token pju168.rh6ww8rovsopr5dr \
+    --discovery-token-ca-cert-hash sha256:ab423d13e9e6c0dcb1850b1cdd0e106376b6f9df85d5de39f4016c66f8fa1b42
+    ```
    NOTE: If you don't have above info, simply run `kubeadm token create --print-join-command` on the master node.<br>
+   
 * Go to master node and run following<br>
    ```kubectl get nodes```<br>
    You should see 2 nodes that are ready.
+   
 * Install nvidia-docker-2<br>
-   ```cp -r /mnt/usbdrive/nvidia-docker-2 .```<br>
-   ```sudo dpkg -i /mnt/usbdrive/nvidia-docker-2/*.deb```<br>
-   `sudo systemctl restart docker`<br>
-   You will need to enable the nvidia runtime as your default runtime on your GPU node. Editing the docker daemon config file which is usually present at `/etc/docker/daemon.json`:
-`{`<br>
-`    "default-runtime": "nvidia",`<br>
-`    "runtimes": {`<br>
-`       "nvidia": {`<br>
-`                   "path": "/usr/bin/nvidia-container-runtime",`<br>
-`                   "runtimeArgs": []`<br>
-`                 }`<br>
-`                }`<br>
-`}`<br>
+   ```
+   cp -r /mnt/usbdrive/nvidia-docker-2
+   sudo dpkg -i /mnt/usbdrive/nvidia-docker-2/*.deb
+   sudo systemctl restart docker
+   ```
+   
+   You will need to enable the nvidia runtime as your default runtime on your GPU node. Editing the docker daemon config file which is usually present at 
+   ```
+   /etc/docker/daemon.json:
+   {   
+   "default-runtime": "nvidia",
+     "runtimes": {
+       "nvidia": {
+         "path": "/usr/bin/nvidia-container-runtime",
+         "runtimeArgs": []
+         }
+        }
+       }
+         
+   ```
+
    Reboot the GPU computer
  * Go back to Master node and run the follwing command <br>
     `kubectl describe nodes | grep -i nvidia.com` <br>
