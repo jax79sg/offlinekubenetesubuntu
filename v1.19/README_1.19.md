@@ -121,6 +121,9 @@ Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
    
    `kubectl apply -f kube-flannel.yml`<br>
    
+   Remove master taint (br>
+   `kubectl taint nodes --all node-role.kubernetes.io/master-`
+   
 * Check installation<br>
    `kubectl get nodes`<br>
    You should see a status indicating master node is ready.
