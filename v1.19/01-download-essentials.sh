@@ -31,17 +31,15 @@ EOF
 
 wget https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz
 mv docker-19.03.9.tgz 02_docker/
-cd 02_docker/
-tar -xvf docker-19.03.9.tgz 
-sudo cp docker/* /usr/bin/
-sudo cp docker.service /etc/systemd/system/
+tar -xvf 02_docker/docker-19.03.9.tgz 
+sudo cp 02_docker/docker/* /usr/bin/
+sudo cp 02_docker/docker.service /etc/systemd/system/
 sudo chmod 644 /etc/systemd/system/docker.service
 sudo systemctl enable docker
 sudo systemctl restart docker
 sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker
-cd ..
 
 
 ## Download Kubernetes 1.19
