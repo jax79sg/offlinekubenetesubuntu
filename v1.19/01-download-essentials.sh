@@ -1,9 +1,9 @@
 #!/bin/bash
-set -e
+#set -e
 # keep track of the last executed command
-trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
+#trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
 # echo an error message before exiting
-trap 'echo "\"${last_command}\" command filed with exit code $?."' EXIT
+#trap 'echo "\"${last_command}\" command filed with exit code $?."' EXIT
 
 ## Download essentials
 mkdir -p 01_essentials
@@ -45,7 +45,6 @@ sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker
 
-
 ## Download Kubernetes 1.19
 mkdir -p 03_kubernetes
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
@@ -53,6 +52,7 @@ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
 deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
+
 sudo apt-get update
 sudo apt-get install --reinstall -y kubelet=1.19.6-00 kubeadm=1.19.6-00 kubectl=1.19.6-00 --download-only
 sudo mv /var/cache/apt/archives/*.deb 03_kubernetes/
