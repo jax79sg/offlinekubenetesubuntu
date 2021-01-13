@@ -28,7 +28,7 @@ sudo apt install -y git
 git clone https://github.com/jax79sg/offlinekubenetesubuntu
 cd offlinekubenetesubuntu/v1.19
 chmod +x 01-download-essentials.sh
-./01-download-essentials.sh
+sudo ./01-download-essentials.sh
 ```
 
 Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
