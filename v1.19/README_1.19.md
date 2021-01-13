@@ -5,9 +5,9 @@ This article is inspired from https://ahmermansoor.blogspot.com/2019/04/install-
 # The following will be setup after all is done.
 ## Online environment
 * Internet machine
-   * Ubuntu 18.04.05. 
+   * A freshly installed Ubuntu 18.04.05, do not run any apt commands after fresh install.
    * This can be a virtual machine. 
-   * Its used to download all the necessary tools
+   * It will be used to download all the necessary tools
 
 ## Offline environment
 * Master node
@@ -21,61 +21,18 @@ This article is inspired from https://ahmermansoor.blogspot.com/2019/04/install-
    * Can be a virtual machine
 -----
 # Setting up the Internet machine
-Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
-* Clone the repo with the necessary scripts<br>
-   ```git clone https://github.com/jax79sg/offlinekubenetesubuntu```<br>
-   ```cp -r offlinekubenetesubuntu /mnt/usbdrive```
-   ```cd offlinekubenetesubuntu```
-* Get files for docker (Up to 19.03 for kubernetes compatibility)<br>
-   ```wget https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz```<br>
-   ```cp docker-19.03.9.tgz /mnt/usbdrive```
-* Get deb files for Kubernetes <br>
-   ```sudo apt-get install -y build-essential openssh-server apt-transport-https curl --download-only```<br>
-   ```curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add```<br>
-   ```curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -```<br>
-   ```cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list```<br>
-   ```deb https://apt.kubernetes.io/ kubernetes-xenial main```<br>
-   ```EOF```<br>
-   ```sudo apt-get update```<br>
-   ```sudo apt-get install -y kubelet=1.19.6-00 kubeadm=1.19.6-00 kubectl=1.19.6-00 --download-only```<br>
-   ```sudo cp /var/cache/apt/archives/*.deb /mnt/usbdrive```<br>
-   ```sudo rm /var/cache/apt/archives/*.deb```<br>
-* Get deb files for nvidia-docker-2<br>
-   `distribution=$(. /etc/os-release;echo $ID$VERSION_ID)`<br>
-   `curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -`<br>
-   `curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list`<br>
-   `sudo apt-get update && sudo apt-get install -y nvidia-docker2 --download-only`<br>
-   ```mkdir /mnt/usbdrive/nvidia-docker-2```<br>
-   ```sudo cp /var/cache/apt/archives/*.deb /mnt/usbdrive/nvidia-docker-2```<br>
-   ```wget https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.7.3/nvidia-device-plugin.yml```<br>
-   ```cp nvidia-device-plugin.yml /mnt/usbdrive/nvidia-docker-2```<br>
+The following script will attempt to download and create all the necessary dependancies and configuration for transfer to the offline master node.
+```
+sudo apt update
+sudo apt install -y git
+git clone https://github.com/jax79sg/offlinekubenetesubuntu
+cd offlinekubenetesubuntu/v1.19
+chmod +x 01-download-essentials.sh
+./01-download-essentials.sh
+```
 
-* Install docker 18.09<br>
-   ```tar -xvf docker-19.03.9.tgz```<br>
-   ```sudo cp docker/* /usr/bin/```<br>
-   ```copy 02_docker/docker.service /etc/systemd/system/```<br>
-   ```sudo chmod 644 /etc/systemd/system/docker.service```<br>
-   ```sudo systemctl enable docker```<br>
-   ```sudo systemctl restart docker```<br>
-   ```sudo groupadd docker```<br>
-   ```sudo usermod -aG docker $USER```<br>
-   ```newgrp docker```<br>
-* Pull relevant images<br>
-   ```wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml```<br>
-   ```kubeadm config images pull```<br>
-      * Make sure all following is pulled by running ```docker images```, if its not, maually do it by running ```docker pull image```<br>
-      ```k8s.gcr.io/kube-apiserver:v1.16.3```  <br>
-      ```k8s.gcr.io/kube-proxy:v1.16.3```<br>
-      ```k8s.gcr.io/kube-controller-manager:v1.16.3```<br>
-      ```k8s.gcr.io/kube-scheduler:v1.16.3```<br>
-      ```k8s.gcr.io/etcd:3.3.15-0```<br>
-      ```k8s.gcr.io/coredns:1.6.2``` <br>
-      ```k8s.gcr.io/pause:3.1``` <br>
-      ```quay.io/coreos/flannel:v0.13.1-rc1``` <br>
-      ```nvidia/k8s-device-plugin:v0.7.3```<br>
-* Save all pulled images<br>
-   ```docker save $(docker images | sed '1d' | awk '{print $1 ":" $2 }') -o dockerimages.tar```<br>
-   ```cp dockerimages.tar /mnt/usbdrive```<br>
+Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
+Copy the `offlinekubenetesubuntu/v1.19` folder to `mnt/usbdrive` and transfer the content to the offline Kubernetes Master.
       
 -----
 # Setting up the offline Kubernetes Master machine
