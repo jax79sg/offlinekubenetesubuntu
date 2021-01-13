@@ -114,7 +114,8 @@ Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
    mkdir -p $HOME/.kube
    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
    sudo chown $(id -u):$(id -g) $HOME/.kube/config
-   ```<br>
+   ```
+   <br>
    
    Install flannel network<br>
    
