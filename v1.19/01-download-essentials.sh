@@ -3,9 +3,9 @@
 ## Download essentials
 mkdir -p 01_essentials
 sudo apt update
-sudo apt-get install --reinstall -y vim build-essential openssh-server apt-transport-https curl --download-only
+sudo apt-get install --reinstall -y git vim build-essential openssh-server apt-transport-https curl --download-only
 sudo mv /var/cache/apt/archives/*.deb 01_essentials/
-sudo apt-get install --reinstall -y vim build-essential openssh-server apt-transport-https curl
+sudo apt-get install --reinstall -y git vim build-essential openssh-server apt-transport-https curl
 sudo rm /var/cache/apt/archives/*.deb
 
 
