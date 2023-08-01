@@ -49,6 +49,9 @@ wget https://github.com/containernetworking/plugins/releases/download/v1.3.0/cni
 sudo mkdir -p /opt/cni/bin
 sudo tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.3.0.tgz
 
+wget https://github.com/containerd/nerdctl/releases/download/v1.5.0/nerdctl-1.5.0-linux-amd64.tar.gz
+tar -xvf nerdctl-1.5.0-linux-amd64.tar.gz
+sudo cp nerdctl /usr/local/bin/
 
 
 # sudo groupadd docker
@@ -76,6 +79,8 @@ sudo mv containerd.service /usr/lib/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable --now containerd
 sudo systemctl restart containerd
+
+
 
 
 sudo mkdir -p /etc/containerd/
