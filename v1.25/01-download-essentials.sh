@@ -70,6 +70,7 @@ tar -xvf gpu-operator-v23.3.2.tgz
 # nvcr.io/nvidia/k8s-device-plugin:v0.14.1-ubi8 
 # nvcr.io/nvidia/k8s/container-toolkit:v1.13.4-ubuntu20.04 
 # nvcr.io/nvidia/k8s/container-toolkit:latest 
+# nvcr.io/nvidia/cloud-native/dcgm:3.1.8-1-ubuntu20.04
 # nvcr.io/nvidia/k8s/dcgm-exporter:3.1.8-3.1.5-ubuntu20.04
 # nvcr.io/nvidia/kubevirt-gpu-device-plugin:v1.2.2 
 # registry.k8s.io/nfd/node-feature-discovery-operator:latest 
@@ -94,33 +95,26 @@ sudo rm /var/cache/apt/archives/*.deb
 
 
 STOPED HERER
-
-
-## Fix containerd
-sudo apt purge containerd.io -y
-wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
-wget https://github.com/containerd/containerd/releases/download/v1.7.2/containerd-1.7.2-linux-amd64.tar.gz
-sudo tar Czxvf /usr/local containerd-1.7.2-linux-amd64.tar.gz
-sudo mv containerd.service /usr/lib/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable --now containerd
-sudo systemctl restart containerd
-
-
-
-
-sudo mkdir -p /etc/containerd/
-containerd config default | sudo tee /etc/containerd/config.toml
-
 ## Download docker images
 mkdir -p 05_dockerimages
 kubeadm config images pull
+
+Dunno pull until where. Think need to configure containd with kubeadm first
+# [config/images] Pulled registry.k8s.io/kube-apiserver:v1.25.12
+# [config/images] Pulled registry.k8s.io/kube-controller-manager:v1.25.12
+# [config/images] Pulled registry.k8s.io/kube-scheduler:v1.25.12
+# [config/images] Pulled registry.k8s.io/kube-proxy:v1.25.12
+# [config/images] Pulled registry.k8s.io/pause:3.8
+# [config/images] Pulled registry.k8s.io/etcd:3.5.6-0
+# [config/images] Pulled registry.k8s.io/coredns/coredns:v1.9.3
+
+stopped here.
 
 docker pull k8s.gcr.io/kube-proxy:v1.25.12
 docker pull quay.io/coreos/flannel:v0.13.1-rc1
 docker pull nvidia/k8s-device-plugin:v0.7.3
 echo Saving images to file
-sudo docker save $(sudo docker images | sed '1d' | awk '{print $1 ":" $2 }') -o 05_dockerimages/dockerimages.tar
+sudo docker save $(sudo docker images | sed '1d' | awk '{print $1 ":" $2 }') -o 05_dockerimages/k8simages.tar
 ## Download/Create config files
 mkdir -p 06_config
 wget https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.7.3/nvidia-device-plugin.yml
