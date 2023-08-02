@@ -55,6 +55,26 @@ sudo cp nerdctl /usr/local/bin/
 
 tar -xvf gpu-operator-v23.3.2.tgz
 
+
+###### Download following container images
+# nvcr.io/nvidia/cloud-native/gpu-operator-validator:latest
+# nvcr.io/nvidia/cloud-native/k8s-driver-manager:v0.6.2 
+# nvcr.io/nvidia/cloud-native/k8s-mig-manager:v0.5.3-ubuntu20.04
+# nvcr.io/nvidia/cloud-native/vgpu-device-manager:v0.2.3
+# nvcr.io/nvidia/cuda:12.2.0-base-ubi8 
+# nvcr.io/nvidia/driver:latest 
+# nvcr.io/nvidia/driver:535.86.10 
+# nvcr.io/nvidia/gpu-feature-discovery:v0.8.1-ubi8 
+# nvcr.io/nvidia/gpu-operator:latest 
+# nvcr.io/nvidia/k8s-device-plugin:v0.14.1-ubi8 
+# nvcr.io/nvidia/k8s/container-toolkit:v1.13.4-ubuntu20.04 
+# nvcr.io/nvidia/k8s/container-toolkit:latest 
+# nvcr.io/nvidia/k8s/dcgm-exporter:3.1.8-3.1.5-ubuntu20.04
+# nvcr.io/nvidia/kubevirt-gpu-device-plugin:v1.2.2 
+# registry.k8s.io/nfd/node-feature-discovery-operator:latest 
+# registry.k8s.io/nfd/node-feature-discovery-operator:v0.6.0 
+# registry.k8s.io/nfd/node-feature-discovery:v0.12.1 
+
 # sudo groupadd docker
 # sudo usermod -aG docker $USER
 # newgrp docker
