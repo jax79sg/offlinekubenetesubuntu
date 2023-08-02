@@ -53,6 +53,7 @@ wget https://github.com/containerd/nerdctl/releases/download/v1.5.0/nerdctl-1.5.
 tar -xvf nerdctl-1.5.0-linux-amd64.tar.gz
 sudo cp nerdctl /usr/local/bin/
 
+tar -xvf gpu-operator-v23.3.2.tgz
 
 # sudo groupadd docker
 # sudo usermod -aG docker $USER
