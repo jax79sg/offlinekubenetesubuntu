@@ -92,6 +92,10 @@ sudo mv /var/cache/apt/archives/*.deb 03_kubernetes/
 sudo apt-get install --reinstall -y kubelet=1.25.12-00 kubeadm=1.25.12-00 kubectl=1.25.12-00
 sudo rm /var/cache/apt/archives/*.deb
 
+
+STOPED HERER
+
+
 ## Fix containerd
 sudo apt purge containerd.io -y
 wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
