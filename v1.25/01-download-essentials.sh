@@ -53,6 +53,7 @@ wget https://github.com/containerd/nerdctl/releases/download/v1.5.0/nerdctl-1.5.
 tar -xvf nerdctl-1.5.0-linux-amd64.tar.gz
 sudo cp nerdctl /usr/local/bin/
 
+git clone https://github.com/NVIDIA/gpu-operator
 tar -xvf gpu-operator-v23.3.2.tgz
 
 
@@ -75,16 +76,16 @@ tar -xvf gpu-operator-v23.3.2.tgz
 # registry.k8s.io/nfd/node-feature-discovery-operator:v0.6.0 
 # registry.k8s.io/nfd/node-feature-discovery:v0.12.1 
 
-# sudo groupadd docker
-# sudo usermod -aG docker $USER
-# newgrp docker
-# docker run hello-world
 
-
-## Download Kubernetes 1.19
+## Download Kubernetes 1.25
 mkdir -p 03_kubernetes
-curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
-echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo mkdir -p /etc/apt/keyrings
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes.gpg
+
+# sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+# # echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+# echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-bionic main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install --reinstall -y kubelet=1.25.12-00 kubeadm=1.25.12-00 kubectl=1.25.12-00 --download-only
 sudo mv /var/cache/apt/archives/*.deb 03_kubernetes/
