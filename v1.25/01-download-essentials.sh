@@ -36,6 +36,7 @@ sudo cp config.toml /etc/containerd/
 sudo systemctl daemon-reload
 sudo systemctl enable --now containerd
 sudo systemctl start containerd
+sudo mkdir -p /var/lib/containerd/
 wget https://github.com/opencontainers/runc/releases/download/v1.1.8/runc.amd64
 sudo install -m 755 runc.amd64 /usr/local/sbin/runc
 wget https://github.com/containernetworking/plugins/releases/download/v1.3.0/cni-plugins-linux-amd64-v1.3.0.tgz
