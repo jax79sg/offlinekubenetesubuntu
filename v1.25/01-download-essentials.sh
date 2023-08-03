@@ -30,9 +30,10 @@ read -p "Press any key to resume ...ctrl-c to quit"
 
 
 wget https://github.com/containerd/containerd/releases/download/v1.7.2/containerd-1.7.2-linux-amd64.tar.gz
-# wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
+wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
 sudo tar Cxzvf /usr/local containerd-1.7.2-linux-amd64.tar.gz
 sudo cp containerd.service /etc/systemd/system/containerd.service
+sudo mkdir -p /etc/containerd
 sudo cp config.toml /etc/containerd/
 sudo systemctl daemon-reload
 sudo systemctl enable --now containerd
