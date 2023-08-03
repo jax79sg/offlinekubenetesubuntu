@@ -58,36 +58,49 @@ wget https://github.com/containerd/nerdctl/releases/download/v1.5.0/nerdctl-1.5.
 tar -xvf nerdctl-1.5.0-linux-amd64.tar.gz
 sudo cp nerdctl /usr/local/bin/
 
+https://github.com/moby/buildkit/releases/download/v0.12.1/buildkit-v0.12.1.linux-amd64.tar.gz
+tar -xvf buildkit-v0.12.1.linux-amd64.tar.gz
+sudo mv bin/* /usr/local/bin/
+sudo cp buildkit.service /etc/systemd/system/
+sudo cp buildkit.socket /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now buildkit
+sudo systemctl start buildkit
+
+
 git clone https://github.com/NVIDIA/gpu-operator
 tar -xvf gpu-operator-v23.3.2.tgz
 
 
+
 ###### Download following container images
-# nvcr.io/nvidia/cloud-native/gpu-operator-validator:latest
-# nvcr.io/nvidia/cloud-native/k8s-driver-manager:v0.6.2 
-# nvcr.io/nvidia/cloud-native/k8s-mig-manager:v0.5.3-ubuntu20.04
-# nvcr.io/nvidia/cloud-native/vgpu-device-manager:v0.2.3
-# nvcr.io/nvidia/cuda:12.2.0-base-ubi8 
-# nvcr.io/nvidia/driver:latest 
-# nvcr.io/nvidia/driver:535.86.10 
-# nvcr.io/nvidia/gpu-feature-discovery:v0.8.1-ubi8 
-# nvcr.io/nvidia/gpu-operator:latest 
-# nvcr.io/nvidia/k8s-device-plugin:v0.14.1-ubi8 
-# nvcr.io/nvidia/k8s/container-toolkit:v1.13.4-ubuntu20.04 
-# nvcr.io/nvidia/k8s/container-toolkit:latest 
-# nvcr.io/nvidia/cloud-native/dcgm:3.1.8-1-ubuntu20.04
-# nvcr.io/nvidia/k8s/dcgm-exporter:3.1.8-3.1.5-ubuntu20.04
-# nvcr.io/nvidia/kubevirt-gpu-device-plugin:v1.2.2 
-# registry.k8s.io/nfd/node-feature-discovery-operator:latest 
-# registry.k8s.io/nfd/node-feature-discovery-operator:v0.6.0 
-# registry.k8s.io/nfd/node-feature-discovery:v0.12.1 
-# registry.k8s.io/coredns/coredns:v1.9.3
-# registry.k8s.io/etcd:3.5.6-0
-# registry.k8s.io/kube-apiserver:v1.25.12
-# registry.k8s.io/kube-controller-manager:v1.25.12
-# registry.k8s.io/kube-proxy:v1.25.12
-# registry.k8s.io/kube-scheduler:v1.25.12
-# registry.k8s.io/pause:3.8
+sudo nerdctl pull nvcr.io/nvidia/cloud-native/gpu-operator-validator:latest
+sudo nerdctl pull nvcr.io/nvidia/cloud-native/k8s-driver-manager:v0.6.2 
+sudo nerdctl pull nvcr.io/nvidia/cloud-native/k8s-mig-manager:v0.5.3-ubuntu20.04
+sudo nerdctl pull nvcr.io/nvidia/cloud-native/vgpu-device-manager:v0.2.3
+sudo nerdctl pull nvcr.io/nvidia/cuda:12.2.0-base-ubi8 
+sudo nerdctl pull nvcr.io/nvidia/driver:latest 
+sudo nerdctl pull nvcr.io/nvidia/driver:535.86.10 
+sudo nerdctl pull nvcr.io/nvidia/gpu-feature-discovery:v0.8.1-ubi8 
+sudo nerdctl pull nvcr.io/nvidia/gpu-operator:latest 
+sudo nerdctl pull nvcr.io/nvidia/k8s-device-plugin:v0.14.1-ubi8 
+sudo nerdctl pull nvcr.io/nvidia/k8s/container-toolkit:v1.13.4-ubuntu20.04 
+sudo nerdctl pull nvcr.io/nvidia/k8s/container-toolkit:latest 
+sudo nerdctl pull nvcr.io/nvidia/cloud-native/dcgm:3.1.8-1-ubuntu20.04
+sudo nerdctl pull nvcr.io/nvidia/k8s/dcgm-exporter:3.1.8-3.1.5-ubuntu20.04
+sudo nerdctl pull nvcr.io/nvidia/kubevirt-gpu-device-plugin:v1.2.2 
+sudo nerdctl pull registry.k8s.io/nfd/node-feature-discovery-operator:latest 
+sudo nerdctl pull registry.k8s.io/nfd/node-feature-discovery-operator:v0.6.0 
+sudo nerdctl pull registry.k8s.io/nfd/node-feature-discovery:v0.12.1 
+sudo nerdctl pull registry.k8s.io/coredns/coredns:v1.9.3
+sudo nerdctl pull registry.k8s.io/etcd:3.5.6-0
+sudo nerdctl pull registry.k8s.io/kube-apiserver:v1.25.12
+sudo nerdctl pull registry.k8s.io/kube-controller-manager:v1.25.12
+sudo nerdctl pull registry.k8s.io/kube-proxy:v1.25.12
+sudo nerdctl pull registry.k8s.io/kube-scheduler:v1.25.12
+sudo nerdctl pull registry.k8s.io/pause:3.8
+sudo nerdctl pull docker.io/flannel/flannel:v0.22.1
+sudo nerdctl pull docker.io/flannel/flannel-cni-plugin:v1.2.0
 
 
 ## Download Kubernetes 1.25
@@ -105,6 +118,9 @@ sudo mv /var/cache/apt/archives/*.deb 03_kubernetes/
 sudo apt-get install --reinstall -y kubelet=1.25.12-00 kubeadm=1.25.12-00 kubectl=1.25.12-00
 sudo rm /var/cache/apt/archives/*.deb
 
+
+ wget https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+ 
 
 STOPED HERER
 
@@ -127,9 +143,9 @@ Dunno pull until where. Think need to configure containd with kubeadm first
 
 stopped here.
 
-docker pull k8s.gcr.io/kube-proxy:v1.25.12
+
 docker pull quay.io/coreos/flannel:v0.13.1-rc1
-docker pull nvidia/k8s-device-plugin:v0.7.3
+
 echo Saving images to file
 sudo docker save $(sudo docker images | sed '1d' | awk '{print $1 ":" $2 }') -o 05_dockerimages/k8simages.tar
 ## Download/Create config files
