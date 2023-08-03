@@ -12,14 +12,12 @@ sudo rm -rf /var/lib/docker
 sudo rm -rf /var/lib/containerd
 echo "cleanup completed"
 read -p "Press any key to resume ...ctrl-c to quit"
-
 ## Download essentials
 mkdir -p 01_essentials
 sudo apt-get update
 sudo apt-get install -y ca-certificates curl gnupg --download-only
 sudo mv /var/cache/apt/archives/*.deb 01_essentials/
 sudo apt-get install -y ca-certificates curl gnupg
-
 sudo apt update
 sudo apt-get install --reinstall -y liberror-perl git-man git vim net-tools build-essential openssh-server apt-transport-https curl ca-certificates curl gnupg --download-only
 sudo mv /var/cache/apt/archives/*.deb 01_essentials/
@@ -43,7 +41,6 @@ sudo install -m 755 runc.amd64 /usr/local/sbin/runc
 wget https://github.com/containernetworking/plugins/releases/download/v1.3.0/cni-plugins-linux-amd64-v1.3.0.tgz
 sudo mkdir -p /opt/cni/bin
 sudo tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.3.0.tgz
-
 wget https://github.com/containerd/nerdctl/releases/download/v1.5.0/nerdctl-1.5.0-linux-amd64.tar.gz
 tar -xvf nerdctl-1.5.0-linux-amd64.tar.gz
 sudo cp nerdctl /usr/local/bin/
