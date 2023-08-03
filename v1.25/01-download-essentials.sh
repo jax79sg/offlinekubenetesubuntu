@@ -44,7 +44,7 @@ sudo tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.3.0.tgz
 wget https://github.com/containerd/nerdctl/releases/download/v1.5.0/nerdctl-1.5.0-linux-amd64.tar.gz
 tar -xvf nerdctl-1.5.0-linux-amd64.tar.gz
 sudo cp nerdctl /usr/local/bin/
-https://github.com/moby/buildkit/releases/download/v0.12.1/buildkit-v0.12.1.linux-amd64.tar.gz
+wget https://github.com/moby/buildkit/releases/download/v0.12.1/buildkit-v0.12.1.linux-amd64.tar.gz
 tar -xvf buildkit-v0.12.1.linux-amd64.tar.gz
 sudo mv bin/* /usr/local/bin/
 sudo cp buildkit.service /etc/systemd/system/
