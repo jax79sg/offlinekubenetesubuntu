@@ -58,6 +58,7 @@ read -p "Press any key to resume ...ctrl-c to quit"
 
 
 ###### Download following container images
+sudo systemctl start containerd
 sudo nerdctl pull nvcr.io/nvidia/cloud-native/gpu-operator-validator:latest
 sudo nerdctl pull nvcr.io/nvidia/cloud-native/k8s-driver-manager:v0.6.2 
 sudo nerdctl pull nvcr.io/nvidia/cloud-native/k8s-mig-manager:v0.5.3-ubuntu20.04
