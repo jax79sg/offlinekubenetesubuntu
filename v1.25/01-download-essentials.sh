@@ -119,7 +119,7 @@ sudo apt-get install --reinstall -y kubelet=1.25.12-00 kubeadm=1.25.12-00 kubect
 sudo rm /var/cache/apt/archives/*.deb
 
 
- wget https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+wget https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
  
 
 STOPED HERER
@@ -142,15 +142,3 @@ Dunno pull until where. Think need to configure containd with kubeadm first
 # [config/images] Pulled registry.k8s.io/coredns/coredns:v1.9.3
 
 stopped here.
-
-
-docker pull quay.io/coreos/flannel:v0.13.1-rc1
-
-echo Saving images to file
-sudo docker save $(sudo docker images | sed '1d' | awk '{print $1 ":" $2 }') -o 05_dockerimages/k8simages.tar
-## Download/Create config files
-mkdir -p 06_config
-wget https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.7.3/nvidia-device-plugin.yml
-wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-mv nvidia-device-plugin.yml 06_config
-mv kube-flannel.yml 06_config
