@@ -11,7 +11,7 @@ sudo apt-get purge docker-ce docker-ce-cli containerd.io docker-buildx-plugin do
 sudo rm -rf /var/lib/docker
 sudo rm -rf /var/lib/containerd
 echo "cleanup completed"
-read -p "Press any key to resume ...ctrl-c to quit"
+# read -p "Press any key to resume ...ctrl-c to quit"
 ## Download essentials
 mkdir -p 01_essentials
 sudo apt-get update
@@ -24,7 +24,7 @@ sudo mv /var/cache/apt/archives/*.deb 01_essentials/
 sudo apt-get install --reinstall -y liberror-perl git-man git vim net-tools build-essential openssh-server apt-transport-https curl ca-certificates curl gnupg
 sudo rm /var/cache/apt/archives/*.deb
 echo "apt stuff completed"
-read -p "Press any key to resume ...ctrl-c to quit"
+# read -p "Press any key to resume ...ctrl-c to quit"
 
 
 wget https://github.com/containerd/containerd/releases/download/v1.7.2/containerd-1.7.2-linux-amd64.tar.gz
@@ -54,7 +54,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now buildkit
 sudo systemctl start buildkit
 echo "Supporting K8S stuff completed"
-read -p "Press any key to resume ...ctrl-c to quit"
+# read -p "Press any key to resume ...ctrl-c to quit"
 
 
 ###### Download following container images
@@ -88,7 +88,7 @@ sudo nerdctl pull docker.io/flannel/flannel:v0.22.1
 sudo nerdctl pull docker.io/flannel/flannel-cni-plugin:v1.2.0
 
 echo "Image pulls complete"
-read -p "Press any key to resume ...ctrl-c to quit"
+# read -p "Press any key to resume ...ctrl-c to quit"
 
 git clone https://github.com/NVIDIA/gpu-operator
 tar -xvf gpu-operator-v23.3.2.tgz
@@ -113,7 +113,7 @@ git clone https://github.com/kubernetes-sigs/metrics-server
 mkdir -p 05_dockerimages/k8s.io
 sudo kubeadm config images pull
 echo "K8S stuff complete"
-read -p "Press any key to resume ...ctrl-c to quit"
+# read -p "Press any key to resume ...ctrl-c to quit"
 
 
 sudo nerdctl save nvcr.io/nvidia/cloud-native/gpu-operator-validator:latest -o ./05_dockerimages/gpu-operator-validator.tar
@@ -147,5 +147,5 @@ sudo nerdctl -n k8s.io save registry.k8s.io/pause:3.8 -o ./05_dockerimages/k8s.i
 sudo nerdctl save docker.io/flannel/flannel:v0.22.1 -o ./05_dockerimages/flannel.tar
 sudo nerdctl save docker.io/flannel/flannel-cni-plugin:v1.2.0 -o ./05_dockerimages/flannel-cni-plugin.tar
 echo "Save images to disk ok"
-read -p "Press any key to resume ...ctrl-c to quit"
+# read -p "Press any key to resume ...ctrl-c to quit"
 
