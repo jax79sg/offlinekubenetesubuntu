@@ -122,11 +122,13 @@ sudo nerdctl save nvcr.io/nvidia/cloud-native/k8s-mig-manager:v0.5.3-ubuntu20.04
 sudo nerdctl save nvcr.io/nvidia/cloud-native/vgpu-device-manager:v0.2.3 -o vgpu-device-manager.tar
 sudo nerdctl save nvcr.io/nvidia/cuda:12.2.0-base-ubi8 -o cuda.tar
 sudo nerdctl save nvcr.io/nvidia/driver:latest -o driver.tar
+sudo nerdctl tag nvcr.io/nvidia/driver:latest nvcr.io/nvidia/driver:535.86.10
 sudo nerdctl save nvcr.io/nvidia/driver:535.86.10 -o driver-version.tar
 sudo nerdctl save nvcr.io/nvidia/gpu-feature-discovery:v0.8.1-ubi8 -o gpu-feature-discovery.tar
 sudo nerdctl save nvcr.io/nvidia/gpu-operator:latest -o gpu-operator.tar
 sudo nerdctl save nvcr.io/nvidia/k8s-device-plugin:v0.14.1-ubi8 -o k8s-device-plugin.tar
 sudo nerdctl save nvcr.io/nvidia/k8s/container-toolkit:v1.13.4-ubuntu20.04 -o container-toolkit.tar
+sudo nerdctl tag nvcr.io/nvidia/k8s/container-toolkit:v1.13.4-ubuntu20.04 nvcr.io/nvidia/k8s/container-toolkit:v1.13.4-ubuntu20.04
 sudo nerdctl save nvcr.io/nvidia/k8s/container-toolkit:latest -o container-toolkit-version.tar
 sudo nerdctl save nvcr.io/nvidia/cloud-native/dcgm:3.1.8-1-ubuntu20.04 -o dcgm.tar
 sudo nerdctl save nvcr.io/nvidia/k8s/dcgm-exporter:3.1.8-3.1.5-ubuntu20.04 -o dcgm-exporter.tar
@@ -134,13 +136,13 @@ sudo nerdctl save nvcr.io/nvidia/kubevirt-gpu-device-plugin:v1.2.2  -o kubevirt-
 sudo nerdctl save registry.k8s.io/nfd/node-feature-discovery-operator:latest -o node-feature-discovery-operator.tar
 sudo nerdctl save registry.k8s.io/nfd/node-feature-discovery-operator:v0.6.0 -o node-feature-discovery-operator-version.tar 
 sudo nerdctl save registry.k8s.io/nfd/node-feature-discovery:v0.12.1  -o node-feature-discovery.tar
-sudo nerdctl save -n k8s.io registry.k8s.io/coredns/coredns:v1.9.3 -o ./k8s.io/coredns.tar
-sudo nerdctl save -n k8s.io registry.k8s.io/etcd:3.5.6-0 -o ./k8s.io/etcd.tar
-sudo nerdctl save -n k8s.io registry.k8s.io/kube-apiserver:v1.25.12 -o ./k8s.io/kube-apiserver.tar
-sudo nerdctl save -n k8s.io  registry.k8s.io/kube-controller-manager:v1.25.12 -o ./k8s.io/kube-controller-manager.tar
-sudo nerdctl save -n k8s.io registry.k8s.io/kube-proxy:v1.25.12 -o ./k8s.io/kube-proxy.tar
-sudo nerdctl save -n k8s.io registry.k8s.io/kube-scheduler:v1.25.12 -o ./k8s.io/kube-scheduler.tar
-sudo nerdctl save -n k8s.io registry.k8s.io/pause:3.8 -o ./k8s.io/pause.tar
+sudo nerdctl -n save k8s.io registry.k8s.io/coredns/coredns:v1.9.3 -o ./k8s.io/coredns.tar
+sudo nerdctl -n save k8s.io registry.k8s.io/etcd:3.5.6-0 -o ./k8s.io/etcd.tar
+sudo nerdctl -n save k8s.io registry.k8s.io/kube-apiserver:v1.25.12 -o ./k8s.io/kube-apiserver.tar
+sudo nerdctl -n save k8s.io  registry.k8s.io/kube-controller-manager:v1.25.12 -o ./k8s.io/kube-controller-manager.tar
+sudo nerdctl -n save k8s.io registry.k8s.io/kube-proxy:v1.25.12 -o ./k8s.io/kube-proxy.tar
+sudo nerdctl -n save k8s.io registry.k8s.io/kube-scheduler:v1.25.12 -o ./k8s.io/kube-scheduler.tar
+sudo nerdctl -n save k8s.io registry.k8s.io/pause:3.8 -o ./k8s.io/pause.tar
 sudo nerdctl save docker.io/flannel/flannel:v0.22.1 -o flannel.tar
 sudo nerdctl save docker.io/flannel/flannel-cni-plugin:v1.2.0 -o flannel-cni-plugin.tar
 echo "Save images to disk ok"
