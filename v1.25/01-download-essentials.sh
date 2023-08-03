@@ -43,12 +43,17 @@ sudo cp containerd.service /etc/systemd/system/containerd.service
 systemctl daemon-reload
 systemctl enable --now containerd
 
+
 wget https://github.com/opencontainers/runc/releases/download/v1.1.8/runc.amd64
 sudo install -m 755 runc.amd64 /usr/local/sbin/runc
 wget https://github.com/containernetworking/plugins/releases/download/v1.3.0/cni-plugins-linux-amd64-v1.3.0.tgz
 sudo mkdir -p /opt/cni/bin
 sudo tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.3.0.tgz
 
+containerd config default > config.toml
+sudo cp config.toml /etc/containerd/
+sudo systemctl restart containerd
+ 
 wget https://github.com/containerd/nerdctl/releases/download/v1.5.0/nerdctl-1.5.0-linux-amd64.tar.gz
 tar -xvf nerdctl-1.5.0-linux-amd64.tar.gz
 sudo cp nerdctl /usr/local/bin/
@@ -76,6 +81,13 @@ tar -xvf gpu-operator-v23.3.2.tgz
 # registry.k8s.io/nfd/node-feature-discovery-operator:latest 
 # registry.k8s.io/nfd/node-feature-discovery-operator:v0.6.0 
 # registry.k8s.io/nfd/node-feature-discovery:v0.12.1 
+# registry.k8s.io/coredns/coredns:v1.9.3
+# registry.k8s.io/etcd:3.5.6-0
+# registry.k8s.io/kube-apiserver:v1.25.12
+# registry.k8s.io/kube-controller-manager:v1.25.12
+# registry.k8s.io/kube-proxy:v1.25.12
+# registry.k8s.io/kube-scheduler:v1.25.12
+# registry.k8s.io/pause:3.8
 
 
 ## Download Kubernetes 1.25
@@ -95,6 +107,11 @@ sudo rm /var/cache/apt/archives/*.deb
 
 
 STOPED HERER
+
+
+
+To add https://github.com/kubernetes-sigs/metrics-server
+
 ## Download docker images
 mkdir -p 05_dockerimages
 kubeadm config images pull
