@@ -5,19 +5,19 @@ This article is inspired from https://ahmermansoor.blogspot.com/2019/04/install-
 # The following will be setup after all is done.
 ## Online environment
 * Internet machine
-   * A freshly installed Ubuntu 18.04.05, do not run any apt commands after fresh install.
+   * A freshly installed Ubuntu 18.04.06, do not run any apt commands after fresh install.
    * This can be a virtual machine. 
    * It will be used to download all the necessary tools
 
 ## Offline environment
 * Master node
-   * Ubuntu 18.04.05. 
+   * Ubuntu 18.04.06. 
    * Can be a virtual machine
 * Worker node (CPU)
-   * Ubuntu 18.04.05. 
+   * Ubuntu 18.04.06. 
    * Can be a virtual machine
 * Worker node (GPU/CPU)
-   * Ubuntu 18.04.05. 
+   * Ubuntu 18.04.06. 
    * Can be a virtual machine
 -----
 # Setting up the Internet machine
@@ -26,10 +26,9 @@ The following script will attempt to download and create all the necessary depen
 sudo apt update
 sudo apt install -y git
 git clone https://github.com/jax79sg/offlinekubenetesubuntu
-cd offlinekubenetesubuntu/v1.19
+cd offlinekubenetesubuntu/v1.25
 chmod +x 01-download-essentials.sh
 sudo ./01-download-essentials.sh
-sudo ./01-download-essentials.sh #Yes, need to run twice to completion
 ```
 
 Assuming that the usb drive is mounted at ```/mnt/usbdrive```<br>
