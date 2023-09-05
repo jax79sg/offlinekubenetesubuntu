@@ -65,7 +65,8 @@ sudo nerdctl pull nvcr.io/nvidia/cloud-native/k8s-mig-manager:v0.5.3-ubuntu20.04
 sudo nerdctl pull nvcr.io/nvidia/cloud-native/vgpu-device-manager:v0.2.3
 sudo nerdctl pull nvcr.io/nvidia/cuda:12.2.0-base-ubi8 
 sudo nerdctl pull nvcr.io/nvidia/driver:latest 
-sudo nerdctl pull nvcr.io/nvidia/driver:535.86.10 
+sudo nerdctl pull nvcr.io/nvidia/driver:535.86.10
+sudo nerdctl pull nvcr.io/nvidia/driver:535.104.05-ubuntu20.04
 sudo nerdctl pull nvcr.io/nvidia/gpu-feature-discovery:v0.8.1-ubi8 
 sudo nerdctl pull nvcr.io/nvidia/gpu-operator:latest 
 sudo nerdctl pull nvcr.io/nvidia/k8s-device-plugin:v0.14.1-ubi8 
@@ -79,10 +80,10 @@ sudo nerdctl pull registry.k8s.io/nfd/node-feature-discovery-operator:v0.6.0
 sudo nerdctl pull registry.k8s.io/nfd/node-feature-discovery:v0.12.1 
 sudo nerdctl pull registry.k8s.io/coredns/coredns:v1.9.3
 sudo nerdctl pull registry.k8s.io/etcd:3.5.6-0
-sudo nerdctl pull registry.k8s.io/kube-apiserver:v1.25.12
-sudo nerdctl pull registry.k8s.io/kube-controller-manager:v1.25.12
+sudo nerdctl pull registry.k8s.io/kube-apiserver:v1.25.13
+sudo nerdctl pull registry.k8s.io/kube-controller-manager:v1.25.13
 sudo nerdctl pull registry.k8s.io/kube-proxy:v1.25.12
-sudo nerdctl pull registry.k8s.io/kube-scheduler:v1.25.12
+sudo nerdctl pull registry.k8s.io/kube-scheduler:v1.25.13
 sudo nerdctl pull registry.k8s.io/pause:3.8
 sudo nerdctl pull docker.io/flannel/flannel:v0.22.1
 sudo nerdctl pull docker.io/flannel/flannel-cni-plugin:v1.2.0
